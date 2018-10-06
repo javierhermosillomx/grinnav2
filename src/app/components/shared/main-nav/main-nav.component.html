@@ -1,3 +1,45 @@
-<p>
-  main-nav works!
-</p>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+          <li class="sidebar-brand">
+            <a href="#">
+              <img src="../../assets/images/logo_CFEnergía.jpg" class="logo-menu img-responsive">
+            </a>
+          </li>
+          <h2 class="text-center">Menú</h2>
+          <li>
+              <a [routerLink]="['/estacion-compresion']">Estación de compresión</a>
+          </li>
+          <li>
+              <a [routerLink]="['/estacion-medicion']">Estación de medición</a>
+          </li>
+          <li>
+              <a [routerLink]="['/linea-marina']">Linea Marina</a>
+          </li>
+          <li>
+              <a [routerLink]="['/linea-terrestre']">Linea Terrestre</a>
+          </li>
+      </ul>
+  </div>
+  <nav class="navbar navbar-default">
+
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="btn btn-link" role="button" href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+        </div>
+      </div>
+    </nav>
+  <div class="page-content-wrapper">
+      <div class="container-fluid">
+
+
+        <div class="row">
+              <div class="col-md-12">
+                  <ng-content>
+
+                  </ng-content>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
