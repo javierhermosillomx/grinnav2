@@ -1,38 +1,38 @@
 <div class="features-boxed">
     <div class="intro">
-        <h2 class="text-left">Estación de compresión</h2>
+        <h2 class="text-center">{{ dataToView.title }}</h2>
     </div>
     <div class="row features">
         <div class="col-md-4 col-sm-6 item">
-            <a href="#" class="learn-more">
+            <a [routerLink]="['/imagenes', dataToView.parentURL]" class="learn-more">
               <div class="box"><i class="glyphicon glyphicon-picture icon"></i>
                   <h3 class="name">Imágenes</h3>
               </div>
             </a>
         </div>
         <div class="col-md-4 col-sm-6 item">
-            <a href="#" class="learn-more">
+            <a [routerLink]="['/reportes-mensuales', dataToView.parentURL]" class="learn-more">
               <div class="box"><i class="glyphicon glyphicon-list-alt icon"></i>
                   <h3 class="name">Reportes Mensuales</h3>
               </div>
             </a>
         </div>
         <div class="col-md-4 col-sm-6 item">
-            <a href="#" class="learn-more">
+            <a [routerLink]="['/avances-obra', dataToView.parentURL]" class="learn-more">
               <div class="box"><i class="fa fa-check icon"></i>
                   <h3 class="name">Avances de Obra</h3>
               </div>
             </a>
         </div>
         <div class="col-md-4 col-sm-6 item">
-            <a href="#" class="learn-more">
+            <a [routerLink]="['/ingenieria', dataToView.parentURL]" class="learn-more">
               <div class="box"><i class="fa fa-cogs icon"></i>
                   <h3 class="name">Ingeniería</h3>
               </div>
             </a>
         </div>
         <div class="col-md-4 col-sm-6 item">
-            <a href="#" class="learn-more">
+            <a [routerLink]="['/graficas', dataToView.parentURL]" class="learn-more">
               <div class="box"><i class="glyphicon glyphicon-stats icon"></i>
                   <h3 class="name">Gráficas</h3>
               </div>

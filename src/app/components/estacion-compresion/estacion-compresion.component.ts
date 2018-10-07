@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ContentPage } from './../../models/contentPage';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-estacion-compresion',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EstacionCompresionComponent implements OnInit {
 
-  constructor() { }
+  model: ContentPage;
+
+  constructor(
+
+  ) { }
 
   ngOnInit() {
+    this.model = new ContentPage(
+      'Estacion de compresión',
+      'estacion-compresion'
+    );
   }
 
 }

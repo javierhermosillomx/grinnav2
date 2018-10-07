@@ -1,0 +1,27 @@
+.icon {
+  font-size: 50px;
+  color: #85BD45;
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
+
+
+.back-text{
+  margin-left: 15px;
+  top: 27px;
+  position: absolute;
+  font-size: 25px;
+  color:#5C605F;
+}
+
+.upload-file{
+  margin-left: 15px;
+  top: 27px;
+  position: absolute;
+  font-size: 25px;
+  color:#5C605F;
+}
+
+.upload-button{
+  width: 250px;;
+}

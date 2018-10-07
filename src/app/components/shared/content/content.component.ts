@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ContentPage } from './../../../models/contentPage';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-content',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
+  @Input() model: ContentPage;
+  dataToView: ContentPage;
+  title: string;
+  parentURL: string;
 
-  constructor() { }
+  constructor() {
+    // subtitle = this.model.title;
+  }
 
   ngOnInit() {
+    this.title = this.model.title;
+    this.parentURL = this.model.parentURL;
+
+    this.dataToView = new ContentPage(
+      this.title,
+      this.parentURL
+    );
   }
 
 }

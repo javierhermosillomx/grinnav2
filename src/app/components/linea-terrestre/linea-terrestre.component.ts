@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ContentPage } from './../../models/contentPage';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-linea-terrestre',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./linea-terrestre.component.css']
 })
 export class LineaTerrestreComponent implements OnInit {
-
+  model: ContentPage;
   constructor() { }
 
   ngOnInit() {
+    this.model = new ContentPage(
+      'Línea terrestre',
+      'linea-terrestre'
+    );
   }
 
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ContentPage } from './../../models/contentPage';
+import { Component, OnInit, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-linea-marina',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./linea-marina.component.css']
 })
 export class LineaMarinaComponent implements OnInit {
+  model: ContentPage;
 
-  constructor() { }
+  constructor(
+
+  ) { }
 
   ngOnInit() {
+    this.model = new ContentPage(
+      'Línea marina',
+      'linea-marina'
+    );
   }
+
 
 }

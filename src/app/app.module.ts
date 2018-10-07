@@ -13,6 +13,11 @@ import { EstacionCompresionComponent } from './components/estacion-compresion/es
 import { MainNavComponent } from './components/shared/main-nav/main-nav.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ContentComponent } from './components/shared/content/content.component';
+import { ModuloImagenesComponent } from './components/shared/modulo-imagenes/modulo-imagenes.component';
+import { ModuloReportesMensualesComponent } from './components/shared/modulo-reportes-mensuales/modulo-reportes-mensuales.component';
+import { ModuloAvancesObraComponent } from './components/shared/modulo-avances-obra/modulo-avances-obra.component';
+import { ModuloIngenieriaComponent } from './components/shared/modulo-ingenieria/modulo-ingenieria.component';
+import { ModuloGraficasComponent } from './components/shared/modulo-graficas/modulo-graficas.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent},
@@ -20,6 +25,11 @@ const appRoutes: Routes = [
   { path: 'estacion-medicion', component: EstacionMedicionComponent},
   { path: 'linea-marina', component: LineaMarinaComponent },
   { path: 'linea-terrestre', component: LineaTerrestreComponent},
+  { path: 'avances-obra/:view', component: ModuloAvancesObraComponent},
+  { path: 'graficas/:view', component: ModuloGraficasComponent},
+  { path: 'imagenes/:view', component: ModuloImagenesComponent},
+  { path: 'ingenieria/:view', component: ModuloIngenieriaComponent},
+  { path: 'reportes-mensuales/:view', component: ModuloReportesMensualesComponent},
   { path: 'login', component: LoginComponent}
 ];
 
@@ -28,15 +38,22 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     LineaTerrestreComponent,
+
     LineaMarinaComponent,
     HomeComponent,
     EstacionMedicionComponent,
     EstacionCompresionComponent,
     MainNavComponent,
-    ContentComponent
+    ContentComponent,
+    ModuloImagenesComponent,
+    ModuloReportesMensualesComponent,
+    ModuloAvancesObraComponent,
+    ModuloIngenieriaComponent,
+    ModuloGraficasComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
