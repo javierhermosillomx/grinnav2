@@ -9,6 +9,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SigupComponent {
   // isLoading = false;
+  name: string;
+  email: string;
+  password: string;
 
   constructor(public authService: AuthService) {}
 

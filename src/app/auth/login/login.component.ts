@@ -9,6 +9,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  username: string;
+  password: string;
 
   constructor(public authService: AuthService) {}
 
