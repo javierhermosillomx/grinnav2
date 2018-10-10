@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod"
+    "postinstall": "ng build --prod",
+    "start:server": "nodemon server.js"
   },
   "private": true,
   "dependencies": {
@@ -24,11 +25,16 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
     "express": "^4.16.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.2",
+    "mongoose-unique-validator": "^2.0.2",
     "ngx-bootstrap": "^3.0.1",
     "rxjs": "~6.2.0",
     "typescript": "~2.9.2",
@@ -49,6 +55,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "nodemon": "^1.18.4",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0"

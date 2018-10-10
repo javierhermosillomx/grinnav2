@@ -1,23 +1,28 @@
 <div id="wrapper">
   <div id="sidebar-wrapper">
-      <ul class="sidebar-nav">
+      <ul class="sidebar-nav menu">
           <li class="sidebar-brand">
             <a href="#">
               <img src="../../assets/images/logo_CFEnergía.jpg" class="logo-menu img-responsive">
             </a>
           </li>
           <h2 class="text-center">Menú</h2>
-          <li>
+          <li *ngIf="userIsAuthenticated">
               <a [routerLink]="['/estacion-compresion']">Estación de compresión</a>
           </li>
-          <li>
+          <li *ngIf="userIsAuthenticated">
               <a [routerLink]="['/estacion-medicion']">Estación de medición</a>
           </li>
-          <li>
+          <li *ngIf="userIsAuthenticated">
               <a [routerLink]="['/linea-marina']">Linea Marina</a>
           </li>
-          <li>
+          <li *ngIf="userIsAuthenticated">
               <a [routerLink]="['/linea-terrestre']">Linea Terrestre</a>
+          </li>
+          <li *ngIf="userIsAuthenticated">
+              <button (click)="onLogout()" class="btn btn-default btn-block">
+                  <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Salir
+              </button>
           </li>
       </ul>
   </div>
@@ -25,7 +30,7 @@
 
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="btn btn-link" role="button" href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+            <a class="btn btn-link" role="button" id="menu-toggle"><i class="fa fa-bars"></i></a>
         </div>
       </div>
     </nav>

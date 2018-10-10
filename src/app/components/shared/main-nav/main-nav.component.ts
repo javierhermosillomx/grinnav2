@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from './../../../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import * as $ from 'jquery';
 
 @Component({
@@ -6,17 +9,27 @@ import * as $ from 'jquery';
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.css']
 })
-export class MainNavComponent implements OnInit {
+export class MainNavComponent implements OnInit, OnDestroy {
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
 
-  constructor() { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    $(document).ready(function() {
-      $('#menu-toggle').click(function(e) {
-        e.preventDefault();
-        $('#wrapper').toggleClass('toggled');
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
       });
-    });
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    this.authListenerSubs.unsubscribe();
   }
 
 }

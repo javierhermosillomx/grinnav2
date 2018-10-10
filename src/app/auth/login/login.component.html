@@ -1,0 +1,14 @@
+<div class="login-clean">
+    <form (submit)="onLoginSubmit(loginForm)" #loginForm="ngForm">
+        <img src="../../../assets/images/logo_Grinnav.jpg" class="img-responsive" />
+        <div class="form-group">
+          <input class="form-control" type="email" name="username" [(ngModel)]="username" name="username" placeholder="Usuario">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="password" name="password" [(ngModel)]="password" name="password" placeholder="Contraseña">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+        </div>
+      </form>
+  </div>

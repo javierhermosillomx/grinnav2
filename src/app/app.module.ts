@@ -1,10 +1,13 @@
+import { AuthGuard } from './models/aut-guard';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 import * as $ from 'jquery';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { LineaTerrestreComponent } from './components/linea-terrestre/linea-terrestre.component';
 import { LineaMarinaComponent } from './components/linea-marina/linea-marina.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,20 +21,8 @@ import { ModuloReportesMensualesComponent } from './components/shared/modulo-rep
 import { ModuloAvancesObraComponent } from './components/shared/modulo-avances-obra/modulo-avances-obra.component';
 import { ModuloIngenieriaComponent } from './components/shared/modulo-ingenieria/modulo-ingenieria.component';
 import { ModuloGraficasComponent } from './components/shared/modulo-graficas/modulo-graficas.component';
-
-const appRoutes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'estacion-compresion', component: EstacionCompresionComponent },
-  { path: 'estacion-medicion', component: EstacionMedicionComponent},
-  { path: 'linea-marina', component: LineaMarinaComponent },
-  { path: 'linea-terrestre', component: LineaTerrestreComponent},
-  { path: 'avances-obra/:view', component: ModuloAvancesObraComponent},
-  { path: 'graficas/:view', component: ModuloGraficasComponent},
-  { path: 'imagenes/:view', component: ModuloImagenesComponent},
-  { path: 'ingenieria/:view', component: ModuloIngenieriaComponent},
-  { path: 'reportes-mensuales/:view', component: ModuloReportesMensualesComponent},
-  { path: 'login', component: LoginComponent}
-];
+import { SigupComponent } from './auth/sigup/sigup.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -49,14 +40,16 @@ const appRoutes: Routes = [
     ModuloReportesMensualesComponent,
     ModuloAvancesObraComponent,
     ModuloIngenieriaComponent,
-    ModuloGraficasComponent
+    ModuloGraficasComponent,
+    SigupComponent
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

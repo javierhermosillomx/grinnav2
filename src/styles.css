@@ -3,3 +3,13 @@
 html{
   background: #e8e8e8 !important;
 }
+
+@media (max-width: 1024px){
+  .col-md-4 {
+    width: 50% !important;
+}
+
+.upload-button {
+  width: 180px !important;
+}
+}
