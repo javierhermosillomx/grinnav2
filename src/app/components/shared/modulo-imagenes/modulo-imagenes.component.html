@@ -25,12 +25,23 @@
                 <h4 class="modal-title" id="documentModalLabel">Agregar documento</h4>
               </div>
               <div class="modal-body">
-                ...
+                <form [formGroup]="form" (submit)="onSaveDocument()">
+                  <div class="form-group">
+                    <label for="exampleInputFile">Selecciona un archivo</label><br>
+                    <button type="button" class="btn btn-default" (click)="filePicker.click()"> Selecciona archivo</button>
+                    <input type="file" #filePicker (change)="onDocumentPicked($event)">
+                    <!-- <p class="help-block">Example block-level help text here.</p> -->
+                  </div>
+                  <div class="image-preview" *ngIf="documentPreview !== '' && documentPreview && form.get('document').valid">
+                      <img [src]="documentPreview" [alt]="form.value.name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                      </div>
+                </form>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
-              </div>
+
             </div>
           </div>
         </div>

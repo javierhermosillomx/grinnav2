@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require("multer");
 
-const Imagen = require('../models/imagen');
+const Document = require('../models/document');
 const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    cb(error, "backend/images");
+    cb(error, "backend/documents");
   },
   filename: (req, file, cb) => {
     const name = file.originalname
@@ -32,56 +32,34 @@ const storage = multer.diskStorage({
   }
 });
 
-
-
-
 router.post(
   "",
-  multer({ storage: storage }).single("url"),
+  multer({ storage: storage }).single("file"),
   (req, res) => {
     const url = req.protocol + "://" + req.get("host");
-    const image = new Imagen({
+    const document = new Document({
       name: req.body.name,
-      createdDate: req.body.createdDate,
-      url: url + "/images/" + req.file.filename
+      category: req.body.category,
+      documentType: req.body.documentType,
+      filePath: url + "/documents/" + req.file.filename,
+      uploadDate: Date.now()
     });
 
-    image.save().then(createdImage => {
+    document.save().then(createdDocument => {
       res.status(201).json({
-        message: 'Image added successfully',
-        image: {
-          ...createdImage,
-          id: createdImage._id
+        message: 'Document added successfully',
+        document: {
+          ...createdDocument,
+          id: createdDocument._id
         }
-
       });
     });
-
 });
-
-// router.get("",checkAuth, (req, res, next) =>{
-
-//   Imagen.find()
-//     .then(documents => {
-//       res.status(200).json({
-//         message: 'Images fetched succesfully !',
-//         images: documents
-//       })
-//     });
-// });
-
-// router.delete("/:id", (req, res, next) => {
-//   Imagen.deleteOne({ _id: req.params.id }).then ( result => {
-//     console.log(result);
-//     res.status(200).json({message: 'Image deleted!'});
-//   });
-
-// });
 
 router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const imageQuery = Imagen.find();
+  const imageQuery = Document.find();
   let fetchedImages;
   if (pageSize && currentPage) {
     imageQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
@@ -89,11 +67,11 @@ router.get("", (req, res, next) => {
   imageQuery
     .then(documents => {
       fetchedImages = documents;
-      return Image.count();
+      return Document.count();
     })
     .then(count => {
       res.status(200).json({
-        message: "Image fetched successfully!",
+        message: "Document fetched successfully!",
         images: fetchedImages,
         maxImages: count
       });
@@ -101,19 +79,19 @@ router.get("", (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
-  Imagen.findById(req.params.id).then(image => {
-    if (image) {
-      res.status(200).json(image);
+  Document.findById(req.params.id).then(document => {
+    if (document) {
+      res.status(200).json(document);
     } else {
-      res.status(404).json({ message: "image not found!" });
+      res.status(404).json({ message: "Document not found!" });
     }
   });
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {
-  Imagen.deleteOne({ _id: req.params.id }).then(result => {
+  Document.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
-    res.status(200).json({ message: "image deleted!" });
+    res.status(200).json({ message: "Document deleted!" });
   });
 });
 

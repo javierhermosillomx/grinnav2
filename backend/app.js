@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const imagesRoutes = require('./routes/imagenes');
 const userRoutes = require('./routes/user');
+const documentsRoutes = require('./routes/documents');
 
 const app =express();
 
@@ -34,15 +35,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(express.static('./dist/app-grinnav'));
+app.use(express.static('../dist/app-grinnav'));
 
-// app.get('/*', (req,res)=>{
+app.get('/*', (req,res)=>{
 
-// res.sendFile(path.join(__dirname,'/dist/app-grinnav/index.html'));
+res.sendFile(path.join(__dirname,'../dist/app-grinnav/index.html'));
 
-// });
+});
 
 app.use('/api/images',imagesRoutes);
 app.use('/api/user',userRoutes);
-
+app.use('/api/documents',documentsRoutes);
 module.exports = app;
