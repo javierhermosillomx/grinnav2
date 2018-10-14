@@ -53,9 +53,9 @@ const onListening = () => {
 // server.listen(port);
 
 // Port Number To Production
-// const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
-const port = 3000;
+// const port = 3000;
 
 // Start Server
 app.listen(port, () => {
