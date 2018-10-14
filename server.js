@@ -43,11 +43,21 @@ const onListening = () => {
   debug("Listening on " + bind);
 };
 
-const port = normalizePort(process.env.PORT || "8080");// Heroku
-// const port = normalizePort(process.env.PORT || "3000");
-app.set("port", port);
+// const port = normalizePort(process.env.PORT || "8080");// Heroku
+// // const port = normalizePort(process.env.PORT || "3000");
+// app.set("port", port);
 
-const server = http.createServer(app);
-server.on("error", onError);
-server.on("listening", onListening);
-server.listen(port);
+// const server = http.createServer(app);
+// server.on("error", onError);
+// server.on("listening", onListening);
+// server.listen(port);
+
+// Port Number To Production
+// const port = process.env.PORT || 8080;
+
+const port = 3000;
+
+// Start Server
+app.listen(port, () => {
+  console.log('Server started on port'+port);
+});
