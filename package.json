@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ng build --prod",
-    "start:server": "nodemon server.js"
+    "start:server": "node server.js"
   },
   "private": true,
   "dependencies": {
