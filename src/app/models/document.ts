@@ -3,21 +3,34 @@ export class Document {
   name: string;
   category: string;
   documentType: string;
+  nameDataBase: string;
   filePath: string;
-  uploadDate: Date;
+  createdBy: string;
+  createdDate: string;
+  updatedBy: string;
+  updatedDate: string;
   constructor (
     id: string,
     name: string,
     category: string,
     documentType: string,
+    nameDataBase: string,
     filePath: string,
-    uploadDate: Date
+    createdBy: string,
+    createdDate: string,
+    updatedBy: string,
+    updatedDate: string,
+
     ) {
       this.id = id;
       this.name = name;
       this.category = category;
       this.documentType = documentType;
+      this.nameDataBase = nameDataBase;
       this.filePath = filePath;
-      this.uploadDate = uploadDate;
+      this.createdBy = createdBy;
+      this.createdDate = createdDate;
+      this.updatedBy = updatedBy;
+      this.updatedDate = updatedDate;
     }
 }

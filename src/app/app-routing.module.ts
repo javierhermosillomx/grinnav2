@@ -11,7 +11,7 @@ import { ModuloGraficasComponent } from './components/shared/modulo-graficas/mod
 import { ModuloImagenesComponent } from './components/shared/modulo-imagenes/modulo-imagenes.component';
 import { ModuloIngenieriaComponent } from './components/shared/modulo-ingenieria/modulo-ingenieria.component';
 import { ModuloReportesMensualesComponent } from './components/shared/modulo-reportes-mensuales/modulo-reportes-mensuales.component';
-import { SigupComponent } from './auth/sigup/sigup.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './models/aut-guard';
 
@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   { path: 'ingenieria/:view', component: ModuloIngenieriaComponent, canActivate: [AuthGuard]},
   { path: 'reportes-mensuales/:view', component: ModuloReportesMensualesComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
-  { path: 'sigup', component: SigupComponent}
+  { path: 'signup', component: SignupComponent}
 ];
 
 @NgModule({

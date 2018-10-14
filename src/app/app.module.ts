@@ -1,11 +1,12 @@
 import { AuthGuard } from './models/aut-guard';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import * as $ from 'jquery';
+import * as bootstrap from 'bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LineaTerrestreComponent } from './components/linea-terrestre/linea-terrestre.component';
@@ -21,15 +22,16 @@ import { ModuloReportesMensualesComponent } from './components/shared/modulo-rep
 import { ModuloAvancesObraComponent } from './components/shared/modulo-avances-obra/modulo-avances-obra.component';
 import { ModuloIngenieriaComponent } from './components/shared/modulo-ingenieria/modulo-ingenieria.component';
 import { ModuloGraficasComponent } from './components/shared/modulo-graficas/modulo-graficas.component';
-import { SigupComponent } from './auth/sigup/sigup.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DataTableModule } from 'angular-6-datatable';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LineaTerrestreComponent,
-
     LineaMarinaComponent,
     HomeComponent,
     EstacionMedicionComponent,
@@ -41,14 +43,17 @@ import { AppRoutingModule } from './app-routing.module';
     ModuloAvancesObraComponent,
     ModuloIngenieriaComponent,
     ModuloGraficasComponent,
-    SigupComponent
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpModule,
+    DataTableModule,
+    FlashMessagesModule.forRoot()
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

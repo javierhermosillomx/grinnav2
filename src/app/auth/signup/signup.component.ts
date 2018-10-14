@@ -3,11 +3,11 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-sigup',
-  templateUrl: './sigup.component.html',
-  styleUrls: ['./sigup.component.css']
+  selector: 'app-singup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class SigupComponent {
+export class SignupComponent {
   // isLoading = false;
   name: string;
   email: string;

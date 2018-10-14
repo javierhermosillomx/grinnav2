@@ -12,7 +12,7 @@ import * as $ from 'jquery';
 export class MainNavComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-
+  username: string;
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
@@ -22,6 +22,8 @@ export class MainNavComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+      const user = JSON.parse(localStorage.getItem('user'));
+      console.log(user);
   }
 
   onLogout() {

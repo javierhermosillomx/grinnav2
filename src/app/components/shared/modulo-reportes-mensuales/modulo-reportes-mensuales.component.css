@@ -2,24 +2,58 @@
   color: #85BD45;
 }
 
-
-.back-text{
+.back-text {
   margin-left: 15px;
   top: 27px;
   position: absolute;
   font-size: 25px;
-  color:#5C605F;
+  color: #5C605F;
 }
 
-.upload-file{
+.upload-file {
   margin-left: 15px;
   top: 27px;
   position: absolute;
   font-size: 25px;
-  color:#5C605F;
+  color: #5C605F;
+  width: 250px;
 }
 
-.upload-button{
-  width: 250px;;
+.upload-button {
+  width: 250px;
+  border-radius: 0px !important;
+  border: 0px !important;
+  box-shadow: 3px 0 6PX rgba(0, 0, 0, .24) !important;
 }
 
+input[type="file"] {
+  visibility: hidden;
+}
+
+.image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  height: 100%;
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.table-documents{
+  margin-top: 30px !important;
+  background: #fff;
+  box-shadow: 3px 0 6PX rgba(0, 0, 0, .24) !important;
+}
+
+a.text-nowrap {
+  color: #5C605F !important;
+}

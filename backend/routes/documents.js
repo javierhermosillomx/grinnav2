@@ -1,48 +1,41 @@
 const express = require('express');
 const multer = require("multer");
-
+const fs = require('fs');
+const path = require('path');
 const Document = require('../models/document');
 const checkAuth = require('../middleware/check-auth');
+const passport = require('passport');
 
 const router = express.Router();
 
-const MIME_TYPE_MAP = {
-  "image/png": "png",
-  "image/jpeg": "jpg",
-  "image/jpg": "jpg"
-};
-
 const storage = multer.diskStorage({
-
   destination: (req, file, cb) => {
-    const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error("Invalid mime type");
-    if (isValid) {
-      error = null;
-    }
-    cb(error, "backend/documents");
+    cb(null, "backend/documents");
   },
   filename: (req, file, cb) => {
     const name = file.originalname
       .toLowerCase()
       .split(" ")
       .join("-");
-    const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + "-" + Date.now() + "." + ext);
+    cb(null, name);
   }
 });
 
 router.post(
   "",
-  multer({ storage: storage }).single("file"),
+  multer({
+    storage: storage
+  }).single("file"),
   (req, res) => {
     const url = req.protocol + "://" + req.get("host");
     const document = new Document({
       name: req.body.name,
       category: req.body.category,
       documentType: req.body.documentType,
-      filePath: url + "/documents/" + req.file.filename,
-      uploadDate: Date.now()
+      nameDataBase: req.body.nameDataBase,
+      filePath: url + req.body.filePath + req.nameDataBase,
+      createdBy: req.body.createdBy,
+      createdDate: Date.now()
     });
 
     document.save().then(createdDocument => {
@@ -54,26 +47,21 @@ router.post(
         }
       });
     });
-});
+  });
 
 router.get("", (req, res, next) => {
-  const pageSize = +req.query.pagesize;
-  const currentPage = +req.query.page;
-  const imageQuery = Document.find();
-  let fetchedImages;
-  if (pageSize && currentPage) {
-    imageQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-  }
-  imageQuery
+  const documentType = req.query.type;
+  const documentCategory = req.query.category;
+  const documentQuery = Document.find({category: documentCategory, documentType: documentType});
+  let fetchedDocuments;
+  documentQuery
     .then(documents => {
-      fetchedImages = documents;
-      return Document.count();
+      fetchedDocuments = documents;
     })
     .then(count => {
       res.status(200).json({
         message: "Document fetched successfully!",
-        images: fetchedImages,
-        maxImages: count
+        documents: fetchedDocuments
       });
     });
 });
@@ -83,16 +71,45 @@ router.get("/:id", (req, res, next) => {
     if (document) {
       res.status(200).json(document);
     } else {
-      res.status(404).json({ message: "Document not found!" });
+      res.status(404).json({
+        message: "Document not found!"
+      });
     }
   });
 });
 
-router.delete("/:id", checkAuth, (req, res, next) => {
-  Document.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Document deleted!" });
+router.delete("/:id", (req, res, next) => {
+  Document.findById(req.params.id).then(document => {
+    if (document) {
+      Document.deleteOne({
+        _id: document._id
+      }).then(result => {
+        fs.exists('backend/documents/' + document.nameDataBase.toLowerCase().split(" ").join("-"), function (exists) {
+          if (exists) {
+            //Show in green
+            console.log('File exists. Deleting now ...');
+            fs.unlink('backend/documents/' + document.nameDataBase.toLowerCase().split(" ").join("-"));
+          } else {
+            //Show in red
+            console.log('+++++++++ File not found, so not deleting. ' + document.nameDataBase.toLowerCase().split(" ").join("-"));
+          }
+        });
+        res.status(200).json({
+          message: "Documento borrado!"
+        });
+      });
+
+    } else {
+      res.status(404).json({
+        message: "Document not found!"
+      });
+    }
   });
+});
+
+router.post('/downloadDocument', function (req, res) {
+  filepath = path.join(__dirname, '../documents') + '/' + req.body.filename;
+  res.sendFile(filepath);
 });
 
 module.exports = router;
