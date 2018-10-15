@@ -24,6 +24,11 @@ html{
 }
 
 
+.navbar-right {
+    float: right!important;
+    margin-right: 125px;
+}
+
 a.text-nowrap {
   color: #000 !important;
   text-decoration: none;

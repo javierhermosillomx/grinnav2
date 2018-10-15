@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthData } from '../models/auth-data.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
     const authData: AuthData = {name: name, email: email, password: password, role: role };
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('https://app-grinnav.herokuapp.com/api/user/signup', authData,  { headers: headers })
+    return this.http.post(environment.apiUrl + '/user/signup', authData,  { headers: headers })
     .pipe(map(res => res.json()));
   }
 
@@ -62,7 +63,7 @@ export class AuthService {
     const authData: AuthData = { email: email, password: password };
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('https://app-grinnav.herokuapp.com/api/user/login', authData, { headers: headers })
+    return this.http.post(environment.apiUrl + '/user/login', authData, { headers: headers })
     .pipe(
       map(res => res.json()
       )

@@ -34,7 +34,7 @@ export class ModuloGraficasComponent implements OnInit {
   documentFilePath = 'documents';
   documentCreatedBy: string;
   docuemntCreatedDate: string;
-
+  userlogged = JSON.parse(localStorage.getItem('user'));
   constructor(
     private route: ActivatedRoute,
     public documentsService: DocumentsService
@@ -78,6 +78,7 @@ export class ModuloGraficasComponent implements OnInit {
   openModal() {
     this.form.reset();
     this.display = 'block';
+    this.documentName = null;
   }
 
   onCloseHandled() {
@@ -103,7 +104,7 @@ export class ModuloGraficasComponent implements OnInit {
     } else {
       this.documentNameDataBase = Date.now() + '-' + this.documentName;
       this.documentFilePath = 'backend/documents';
-      this.documentCreatedBy = 'javier';
+      this.documentCreatedBy = this.userlogged.id;
       this.documentsService.addDocument(
         this.documentName,
         this.documentCategory,
@@ -143,12 +144,12 @@ export class ModuloGraficasComponent implements OnInit {
     return new Date(dateStr);
   }
 
-  downloadDocument(documentDataBaseName) {
+  download(documentDataBaseName) {
     const documentName = documentDataBaseName
       .toLowerCase()
       .split(' ')
       .join('-');
-    this.documentsService.downloadDocument(documentName).subscribe(
+    this.documentsService.download(documentName).subscribe(
       data => {
         saveAs(data, documentName);
       },

@@ -33,7 +33,7 @@ router.post(
       category: req.body.category,
       documentType: req.body.documentType,
       nameDataBase: req.body.nameDataBase,
-      filePath: url + req.body.filePath + req.nameDataBase,
+      filePath: url + '/' + req.body.filePath + '/' + req.body.nameDataBase,
       createdBy: req.body.createdBy,
       createdDate: Date.now()
     });
@@ -107,7 +107,7 @@ router.delete("/:id", (req, res, next) => {
   });
 });
 
-router.post('/downloadDocument', function (req, res) {
+router.post('/download', function (req, res) {
   filepath = path.join(__dirname, '../documents') + '/' + req.body.filename;
   res.sendFile(filepath);
 });

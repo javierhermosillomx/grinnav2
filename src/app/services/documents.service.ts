@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 import { Document } from './../models/document';
 
@@ -23,7 +24,7 @@ export class DocumentsService {
 
     this.http
       .get<{ message: string; documents: any; }>(
-        'http://localhost:3000/api/documents'
+        environment.apiUrl + '/documents'
       , { params: params})
       .pipe(
         map(documentData => {
@@ -78,7 +79,7 @@ export class DocumentsService {
     documentData.append('file', file, nameDataBase);
     this.http
       .post<{ message: string; document: Document }>(
-        'http://localhost:3000/api/documents',
+        environment.apiUrl + '/documents',
         documentData
       )
       .subscribe(responseData => {
@@ -99,20 +100,20 @@ export class DocumentsService {
       documentType: string;
       filePath: string;
       uploadDate: Date;
-    }>('http://localhost:3000/api/documents/' + id);
+    }>(environment.apiUrl + '/documents/' + id);
   }
 
   deleteDocument(documentId: string) {
     return this.http.delete(
-      'http://localhost:3000/api/documents/' + documentId
+      environment.apiUrl + '/documents/' + documentId
     );
   }
 
-  downloadDocument(file: String) {
+  download(file: String) {
     const body = { filename: file };
 
     return this.http.post(
-      'http://localhost:3000/api/documents/downloadDocument',
+      environment.apiUrl + '/documents/download',
       body,
       {
         responseType: 'blob',

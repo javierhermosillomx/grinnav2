@@ -38,7 +38,7 @@
                     <button type="button" class="btn btn-danger btn-sm pull-right" (click)='deleteDocument(item.id)'>
                       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar
                     </button>
-                    <button type="button" class="btn btn-success btn-sm pull-right" (click)='downloadDocument(item.nameDataBase)'>
+                    <button type="button" class="btn btn-success btn-sm pull-right" (click)='download(item.nameDataBase)'>
                       <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar
                     </button>
 
@@ -76,9 +76,10 @@
               <button type="button" class="btn btn-default" (click)="filePicker.click()"> Selecciona un documento</button>
               <input type="file" #filePicker (change)="onDocumentPicked($event)">
             </div>
-            <div class="image-preview" *ngIf="documentPreview !== '' && documentPreview && form.get('document').valid">
-              <img [src]="documentPreview" [alt]="form.value.name">
-            </div>
+          <!-- <div class="image-preview" *ngIf="documentPreview !== '' && documentPreview && form.get('document').valid">
+            <img [src]="documentPreview" [alt]="form.value.name">
+          </div> -->
+          <label><i class="fa fa-check" *ngIf="documentName"></i> {{documentName}} </label>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" (click)="onCloseHandled()">Cancelar</button>
               <button type="submit" class="btn btn-primary">Guardar</button>
