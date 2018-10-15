@@ -30,7 +30,7 @@ export class AuthService {
     const authData: AuthData = {name: name, email: email, password: password, role: role };
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/api/user/signup', authData,  { headers: headers })
+    return this.http.post('https://app-grinnav.herokuapp.com/api/user/signup', authData,  { headers: headers })
     .pipe(map(res => res.json()));
   }
 
@@ -62,7 +62,7 @@ export class AuthService {
     const authData: AuthData = { email: email, password: password };
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/api/user/login', authData, { headers: headers })
+    return this.http.post('https://app-grinnav.herokuapp.com/api/user/login', authData, { headers: headers })
     .pipe(
       map(res => res.json()
       )
