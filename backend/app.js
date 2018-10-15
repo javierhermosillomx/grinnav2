@@ -55,18 +55,9 @@ app.use("/documents", express.static(path.join(__dirname, "documents")));
 app.use("/", express.static(path.join(__dirname, "angular")));
 
 app.use('/api/user', userRoutes);
-app.use('/api/documents', documentsRoutes);
-// app.get((req, res) => {
-//   res.sendFile(path.join(__dirname,'../dist/app-grinnav/index.html'));
-// });
-
-// app.get('/', (req, res) =>{
-//   res.send('Invalid Endpoint');
-// });
+app.use('/api/documents', documentsRoutes);;
 
 app.get('*', (req, res) => {
-  // res.sendFile(path.join(__dirname,'public/index.html'));
-  // res.sendFile(path.join(__dirname,'../dist/app-grinnav/index.html'));
   res.sendFile(path.join(__dirname, "angular", "index.html"));
 });
 
