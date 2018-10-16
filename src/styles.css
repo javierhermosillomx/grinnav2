@@ -33,3 +33,8 @@ a.text-nowrap {
   color: #000 !important;
   text-decoration: none;
 }
+
+
+.flash-messages{
+  margin-top: 25px !important;
+}

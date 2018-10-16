@@ -1,91 +1,126 @@
 <app-main-nav>
-  <div class="container-fluid">
-    <div class="row">
-      <h3 class="text-left">{{ title }} / {{ section }}</h3>
-    </div>
-    <div class="row">
-      <div class="wall">
-        <a routerLink="{{linkBack}}" class="btn btn-default btn-lg pull-left upload-button">
-          <span class="fa fa-arrow-circle-left icon" aria-hidden="true"></span> Regresar
-        </a>
-
-        <button type="button" class="btn btn-default btn-lg pull-right upload-button" (click)='openModal()'>
-          <span class="glyphicon glyphicon-cloud-upload icon" aria-hidden="true"></span> Agregar imagen
-        </button>
+    <div class="container-fluid">
+      <div class="row">
+        <h3 class="text-left">{{ title }} / {{ section }}</h3>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <table class="table table-striped table-responsive table-hover table-documents" [mfData]="documents" #mf="mfDataTable"
-            [mfRowsOnPage]="5">
-            <thead>
-              <tr>
-                <th>
-                  <mfDefaultSorter by="name" class="th-table-documents">Nombre</mfDefaultSorter>
-                </th>
-                <th>
-                  <mfDefaultSorter by="uploadDate" class="th-table-documents">Fecha</mfDefaultSorter>
-                </th>
-                <th>
+        <div class="wall">
+          <a routerLink="{{linkBack}}" class="btn btn-default btn-lg pull-left upload-button">
+            <span class="fa fa-arrow-circle-left icon" aria-hidden="true"></span> Regresar
+          </a>
 
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of mf.data">
-                <td>{{item.name}}</td>
-                <td>{{ stringAsDate(item.createdDate) | date:'MM/dd/yy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-danger btn-sm pull-right" (click)='deleteDocument(item.id)'>
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm pull-right" (click)='download(item.nameDataBase)'>
-                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar
-                  </button>
-
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="4">
-                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                </td>
-              </tr>
-
-            </tfoot>
-          </table>
+          <button type="button" class="btn btn-default btn-lg pull-right upload-button" (click)='openModal()' *ngIf="userlogged.role == 'admin'">
+            <span class="glyphicon glyphicon-cloud-upload icon" aria-hidden="true"></span> Agregar documento
+          </button>
         </div>
+        <div class="row container-document-ype">
+          <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                <flash-messages></flash-messages>
+                </div>
+            </div>
 
+            <div class="alert alert-warning"  *ngIf="!documents || documents?.length === 0">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>No se han agregado documentos en esta sección.</strong>
+            </div>
+
+            <table class="table table-striped table-responsive table-hover table-documents" *ngIf="documents.length > 0" [mfData]="documents" #mf="mfDataTable"
+              [mfRowsOnPage]="5">
+              <thead>
+                <tr>
+                  <th>
+                    <mfDefaultSorter by="name" class="th-table-documents">Nombre</mfDefaultSorter>
+                  </th>
+                  <th>
+                    <mfDefaultSorter by="uploadDate" class="th-table-documents">Fecha</mfDefaultSorter>
+                  </th>
+                  <th>
+
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of mf.data">
+                  <td>{{item.name}}</td>
+                  <td>{{ stringAsDate(item.createdDate) | date:'MM/dd/yy' }}</td>
+                  <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger btn-sm pull-right"  (click)='openModalConfimr(item.name, item.id)' *ngIf="userlogged.role == 'admin'">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar
+                      </button>
+                    <button type="button" class="btn btn-success btn-sm pull-right" (click)='download(item.nameDataBase)'>
+                      <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Descargar
+                    </button>
+
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
-</app-main-nav>
+  </app-main-nav>
 
-<!-- Modal Agregar Documento -->
-<div class="backdrop" [ngStyle]="{'display':display}"></div>
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="documentModalLabel">Agregar documento</h4>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="form" (submit)="onSaveDocument()" enctype="multipart/form-data">
-          <div class="form-group">
-            <button type="button" class="btn btn-default" (click)="filePicker.click()"> Selecciona un documento</button>
-            <input type="file" #filePicker (change)="onDocumentPicked($event)">
-          </div>
+  <!-- Modal Agregar Documento -->
+  <div class="backdrop" [ngStyle]="{'display':display}"></div>
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="documentModalLabel">Agregar documento</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form" (submit)="onSaveDocument()" enctype="multipart/form-data">
+            <div class="form-group">
+              <button type="button" class="btn btn-default" (click)="filePicker.click()"> Selecciona un documento</button>
+              <input type="file" #filePicker (change)="onDocumentPicked($event)">
+            </div>
           <!-- <div class="image-preview" *ngIf="documentPreview !== '' && documentPreview && form.get('document').valid">
             <img [src]="documentPreview" [alt]="form.value.name">
           </div> -->
-          <label><i class="glyphicon glyphicon-picture" *ngIf="documentName"></i> {{documentName}} </label>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" (click)="onCloseHandled()">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal !-->
+          <label><i class="fa fa-check" *ngIf="documentName"></i> {{documentName}} </label>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" (click)="onCloseHandled()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal !-->
+
+  <!-- Modal Confirmación Borrar -->
+  <div class="backdrop" [ngStyle]="{'display':displayConfirm }"></div>
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayConfirm }">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="onCloseHandledConfirm()"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="documentModalLabel">Borrar documento</h4>
+        </div>
+        <div class="modal-body">
+          <p> Seguro que deseas eliminar el siguiente documento? </p>
+          <label><i class="fa fa-check" *ngIf="documentName"></i> {{documentToDeleted}} </label>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="onCloseHandledConfirm()">Cancelar</button>
+              <button type="button" class="btn btn-danger" (click)='deleteDocument(documentToDeletedId)'>
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Borrar
+                </button>
+            </div>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal !-->

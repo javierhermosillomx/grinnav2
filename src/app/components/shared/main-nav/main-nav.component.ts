@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import * as $ from 'jquery';
+declare var $: any;
 
 @Component({
   selector: 'app-main-nav',
@@ -31,6 +31,14 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+    $('#menu-toggle').click(function(e) {
+      e.preventDefault();
+      $('#wrapper').toggleClass('toggled');
+    });
   }
 
 }

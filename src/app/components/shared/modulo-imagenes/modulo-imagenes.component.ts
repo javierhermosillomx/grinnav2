@@ -6,6 +6,7 @@ import { Document } from './../../../models/document';
 import { DocumentsService } from '../../../services/documents.service';
 import { Subscription } from 'rxjs';
 import { saveAs } from 'file-saver';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-modulo-imagenes',
@@ -34,10 +35,14 @@ export class ModuloImagenesComponent implements OnInit {
   documentCreatedBy: string;
   docuemntCreatedDate: string;
   userlogged = JSON.parse(localStorage.getItem('user'));
+  displayConfirm = 'none';
+  documentToDeleted: string;
+  documentToDeletedId: string;
 
   constructor(
     private route: ActivatedRoute,
-    public documentsService: DocumentsService
+    public documentsService: DocumentsService,
+    private flashMessagesService: FlashMessagesService
   ) {}
 
   ngOnInit() {
@@ -76,13 +81,25 @@ export class ModuloImagenesComponent implements OnInit {
   }
 
   openModal() {
+    this.documentName = null;
     this.form.reset();
     this.display = 'block';
-    this.documentName = null;
   }
 
   onCloseHandled() {
     this.display = 'none';
+  }
+
+  openModalConfimr(documentName: string, documentId: string) {
+    this.documentToDeleted = documentName;
+    this.documentToDeletedId = documentId;
+    this.displayConfirm = 'block';
+  }
+
+  onCloseHandledConfirm() {
+    this.documentToDeleted = null;
+    this.documentToDeletedId = null;
+    this.displayConfirm = 'none';
   }
 
   onDocumentPicked(event: Event) {
@@ -96,10 +113,12 @@ export class ModuloImagenesComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-
   onSaveDocument() {
     if (this.form.invalid) {
-      alert('Ocurrió un problema al intentar guardar el documento.');
+      this.flashMessagesService.show(
+        'Ocurrió un problema al intentar guardar el documento.',
+        { cssClass: 'alert-danger', timeout: 3000 }
+      );
       return;
     } else {
       this.documentNameDataBase = Date.now() + '-' + this.documentName;
@@ -136,7 +155,13 @@ export class ModuloImagenesComponent implements OnInit {
       .deleteDocument(documentId)
       .subscribe(() => {
         this.documentsService.getDocuments(null, null, this.documentType, this.documentCategory);
-        alert('Se elimino el documento exitosamente.');
+        this.displayConfirm = 'none';
+        this.documentToDeleted = null;
+        this.documentToDeletedId = null;
+        this.flashMessagesService.show(
+          'Se elimino el documento exitosamente.',
+          { cssClass: 'alert-success', timeout: 3000 }
+        );
       });
   }
 
@@ -154,7 +179,10 @@ export class ModuloImagenesComponent implements OnInit {
         saveAs(data, documentName);
       },
       err => {
-        alert('Problema al descargar el archivo.');
+        this.flashMessagesService.show(
+          'Problema al descargar el archivo.',
+          { cssClass: 'alert-danger', timeout: 3000 }
+        );
         console.error(err);
       }
     );

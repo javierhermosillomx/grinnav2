@@ -49,7 +49,6 @@ input[type="file"] {
 }
 
 .table-documents{
-  margin-top: 30px !important;
   background: #fff;
   box-shadow: 3px 0 6PX rgba(0, 0, 0, .24) !important;
 }
@@ -57,3 +56,8 @@ input[type="file"] {
 a.text-nowrap {
   color: #5C605F !important;
 }
+
+.container-document-type{
+  margin-top:25px !important;
+}
+
