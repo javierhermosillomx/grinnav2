@@ -7,6 +7,7 @@ import { DocumentsService } from '../../../services/documents.service';
 import { Subscription } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-modulo-avances-obra',
@@ -42,7 +43,8 @@ export class ModuloAvancesObraComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public documentsService: DocumentsService,
-    private flashMessagesService: FlashMessagesService
+    private flashMessagesService: FlashMessagesService,
+    private spinner: NgxSpinnerService
   ) {}
 
     ngOnInit() {
@@ -153,6 +155,7 @@ export class ModuloAvancesObraComponent implements OnInit {
   }
 
   deleteDocument(documentId: string) {
+    this.spinner.show();
     const result = this.documentsService
       .deleteDocument(documentId)
       .subscribe(() => {
@@ -160,11 +163,13 @@ export class ModuloAvancesObraComponent implements OnInit {
         this.displayConfirm = 'none';
         this.documentToDeleted = null;
         this.documentToDeletedId = null;
+        this.spinner.hide();
         this.flashMessagesService.show(
           'Se elimino el documento exitosamente.',
           { cssClass: 'alert-success', timeout: 3000 }
         );
       });
+      this.spinner.hide();
   }
 
   stringAsDate(dateStr: string) {
@@ -172,6 +177,7 @@ export class ModuloAvancesObraComponent implements OnInit {
   }
 
   download(documentDataBaseName) {
+    this.spinner.show();
     const documentName = documentDataBaseName
       .toLowerCase()
       .split(' ')
@@ -179,8 +185,10 @@ export class ModuloAvancesObraComponent implements OnInit {
     this.documentsService.download(documentName).subscribe(
       data => {
         saveAs(data, documentName);
+        this.spinner.hide();
       },
       err => {
+        this.spinner.hide();
         this.flashMessagesService.show(
           'Problema al descargar el archivo.',
           { cssClass: 'alert-danger', timeout: 3000 }

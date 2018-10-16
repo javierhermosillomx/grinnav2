@@ -26,6 +26,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DataTableModule } from 'angular-6-datatable';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
     HttpClientModule,
     HttpModule,
     DataTableModule,
+    NgxSpinnerModule,
     FlashMessagesModule.forRoot()
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
