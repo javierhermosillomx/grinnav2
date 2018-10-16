@@ -1,5 +1,5 @@
 export const environment = {
 
   production: true,
-  apiUrl: 'https://app-grinnav.herokuapp.com/api'
+  apiUrl: 'https://grinnav.herokuapp.com/api'
 };
